@@ -28,9 +28,9 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
       
-    - name: Enviar email con send-mailer
+    - name: Enviar email con dawidd6
       if: always()  # Ejecutar incluso si falla el build/test
-      uses: devellany/send-mailer@v1.0.2
+      uses: ddawidd6/action-send-mail@v3
       with:
         host: app.debugmail.io
         account: ${{ secrets.DEBUGMAIL_USER }}
