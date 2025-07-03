@@ -28,20 +28,24 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
       
+    
     - name: Enviar email con dawidd6
-      if: always()  # Ejecutar incluso si falla el build/test
+      if: always()
       uses: dawidd6/action-send-mail@v3
       with:
-        host: app.debugmail.io
-        account: ${{ secrets.DEBUGMAIL_USER }}
-        password: ${{ secrets.DEBUGMAIL_PASS }}
-        sender: GitHub Actions
-        from: ${{ secrets.DEBUGMAIL_USER }}@debugmail.io
-        to: ${{ secrets.DEBUGMAIL_TO }}
-        subject: Resultado del pipeline GH-build-DEV
-        body: |
-          El workflow ha finalizado.<br/>
-          Estado: ${{ job.status }}<br/>
-          Rama: ${{ github.ref }}<br/>
-          Commit: ${{ github.sha }}
-        contentType: text/html
+       server_address: app.debugmail.io
+       server_port: 25
+       secure: false
+       username: ${{ secrets.DEBUGMAIL_USER }}
+       password: ${{ secrets.DEBUGMAIL_PASS }}
+       from: GitHub Actions <gh-actions@debugmail.io>
+       to: ${{ secrets.DEBUGMAIL_TO }}
+       subject: Resultado del pipeline GH-build-DEV
+       html_body: |
+        <p>El workflow ha finalizado.</p>
+         <ul>
+        <li><strong>Estado:</strong> ${{ job.status }}</li>
+        <li><strong>Rama:</strong> ${{ github.ref }}</li>
+        <li><strong>Commit:</strong> ${{ github.sha }}</li>
+         </ul>
+
