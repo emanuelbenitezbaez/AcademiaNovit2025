@@ -30,7 +30,7 @@ jobs:
       
     - name: Enviar email con dawidd6
       if: always()  # Ejecutar incluso si falla el build/test
-      uses: ddawidd6/action-send-mail@v3
+      uses: dawidd6/action-send-mail@v3
       with:
         host: app.debugmail.io
         account: ${{ secrets.DEBUGMAIL_USER }}
