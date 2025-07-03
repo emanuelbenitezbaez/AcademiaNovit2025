@@ -1,0 +1,27 @@
+
+#Nombre del pipeline
+name: GH-build-DEV
+#Evento que se dispara cuando se pushea a main o se genera un pull request.
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+#Trabajo de compilación y pruebas.
+jobs:
+  build:
+
+    runs-on: ubuntu-24.04
+     #Pasos del job usando acciones.
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
