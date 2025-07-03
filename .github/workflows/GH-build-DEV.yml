@@ -27,3 +27,21 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+      
+    - name: Enviar email con send-mailer
+      if: always()  # Ejecutar incluso si falla el build/test
+      uses: devellany/send-mailer@v1.0.2
+      with:
+        host: app.debugmail.io
+        account: ${{ secrets.DEBUGMAIL_USER }}
+        password: ${{ secrets.DEBUGMAIL_PASS }}
+        sender: GitHub Actions
+        from: ${{ secrets.DEBUGMAIL_USER }}@debugmail.io
+        to: ${{ secrets.DEBUGMAIL_TO }}
+        subject: Resultado del pipeline GH-build-DEV
+        body: |
+          El workflow ha finalizado.<br/>
+          Estado: ${{ job.status }}<br/>
+          Rama: ${{ github.ref }}<br/>
+          Commit: ${{ github.sha }}
+        contentType: text/html
