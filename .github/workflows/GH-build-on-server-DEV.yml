@@ -21,4 +21,4 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_PASSWORD_PRIVATE_KEY }}
           port: ${{ secrets.VMSERVER_PORT_PINGGY }}
-          script: whoami
+          script: ls -al
