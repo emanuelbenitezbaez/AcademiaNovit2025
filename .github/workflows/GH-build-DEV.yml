@@ -35,7 +35,6 @@ jobs:
       with:
        server_address: ${{ secrets.DEBUGMAIL_HOST }}
        server_port: ${{ secrets.DEBUGMAIL_PORT }}
-       secure: false
        username: ${{ secrets.DEBUGMAIL_USER }}
        password: ${{ secrets.DEBUGMAIL_PASS }}
        from: Emanuel Benitez Baez
