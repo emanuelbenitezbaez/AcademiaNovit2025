@@ -33,12 +33,12 @@ jobs:
       if: always()
       uses: dawidd6/action-send-mail@v3
       with:
-       server_address: app.debugmail.io
-       server_port: 25
+       server_address: ${{ secrets.DEBUGMAIL_HOST }}
+       server_port: ${{ secrets.DEBUGMAIL_PORT }}
        secure: false
        username: ${{ secrets.DEBUGMAIL_USER }}
        password: ${{ secrets.DEBUGMAIL_PASS }}
-       from: GitHub Actions <gh-actions@debugmail.io>
+       from: Emanuel Benitez Baez
        to: ${{ secrets.DEBUGMAIL_TO }}
        subject: Resultado del pipeline GH-build-DEV
        html_body: |
