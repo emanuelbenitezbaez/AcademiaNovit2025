@@ -14,11 +14,19 @@ jobs:
      #Pasos del job usando acciones.
     steps:
 
-      - name: Execute remote SSH commands using password
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.VMSERVER_URL_PINGGY }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SERVER_PASSWORD_PRIVATE_KEY }}
-          port: ${{ secrets.VMSERVER_PORT_PINGGY }}
-          script: ls -al
+     - name: Build and publish on remote server
+       uses: appleboy/ssh-action@v1
+       with:
+        host: ${{ secrets.VMSERVER_URL_PINGGY }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        key: ${{ secrets.SERVER_PASSWORD_PRIVATE_KEY }}
+        port: ${{ secrets.VMSERVER_PORT_PINGGY }}
+        script: |
+         rm -rf AcademiaNovit2025 || true
+         git clone https://github.com/emanuelbenitezbaez/AcademiaNovit2025.git
+         cd AcademiaNovit2025/AcademiaNovit
+         dotnet build
+         dotnet publish -c Release -o ./publish
+
+
+          
