@@ -34,6 +34,6 @@ jobs:
         key: ${{ secrets.SERVER_PASSWORD_PRIVATE_KEY }}
         port: ${{ secrets.VMSERVER_PORT_PINGGY }}
         script: script:|
-          docker compose -f docker-ubuntu.yml pull
-          docker compose -f docker-ubuntu.yml up -d
+          docker-compose -f docker-ubuntu.yml pull
+          docker-compose -f docker-ubuntu.yml up -d
 
