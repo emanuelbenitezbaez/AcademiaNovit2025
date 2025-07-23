@@ -33,7 +33,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SERVER_PASSWORD_PRIVATE_KEY }}
         port: ${{ secrets.VMSERVER_PORT_PINGGY }}
-        script: |
-          docker pull ghcr.io/${{ secrets.REGISTRY_OWNER }}/appdocker:latest  
-          docker compose -f docker-ubuntu.yml down
-          docker compose -f docker-ubuntu.yml up -d --remove-orphans
+        script: script:|
+          docker compose -f docker-ubuntu.yml pull
+          docker compose -f docker-ubuntu.yml up -d
+
