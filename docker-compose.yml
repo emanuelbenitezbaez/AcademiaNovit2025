@@ -1,7 +1,6 @@
 
 
 
-version: '3.9'
 
 services:
   postgres:
@@ -31,7 +30,7 @@ services:
     networks:
       - app
     environment:
-      ConnectionStrings__DefaultConnection: Host=postgres_db;Port=5432;Database=AcademiaNovitDB;Username=postgres;Password=MySecretPassword123!
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=AcademiaNovitDB;Username=postgres;Password=MySecretPassword123!
 
 networks:
   app:
