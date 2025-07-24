@@ -1,3 +1,4 @@
+
 services:
   postgres:
     image: postgres:17.5
@@ -6,48 +7,33 @@ services:
       POSTGRES_PASSWORD: MySecretPassword123!
     ports:
       - "5432:5432"
-    networks:
-      - swarm-network
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-      placement:
-        constraints:
-          - node.role == manager
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app
+    deploy:
+      placement:
+        constraints: [node.role == manager]
 
   appdocker:
     image: ghcr.io/emanuelbenitezbaez/appdocker:latest
     ports:
       - "8080:8080"
+    depends_on:
+      - postgres
     environment:
       ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=AcademiaNovitDB;Username=postgres;Password=MySecretPassword123!
     networks:
-      - swarm-network
+      - app
     deploy:
       replicas: 5
       restart_policy:
         condition: on-failure
-        delay: 5s
-        max_attempts: 3
-      update_config:
-        parallelism: 2
-        delay: 10s
-        failure_action: rollback
       placement:
-        max_replicas_per_node: 2
-    depends_on:
-      - postgres
-
-networks:
-  swarm-network:
-    driver: overlay
-    attachable: true
+        constraints: [node.role == manager]
 
 volumes:
-  postgres_data:
-    driver: local
+  pgdata:
+
+networks:
+  app:
